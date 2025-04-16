@@ -115,14 +115,15 @@ if __name__ == '__main__':
             
         else:
             print("This project has no scans: " + project.name)
-
+    
         #Create csv file with all results
         currentDate = datetime.now().strftime("%d-%m-%Y")
-        fileName = "AllFindings_" + currentDate + ".csv"
+        fileName = "AllFindings_" + project.name.replace("/","_") + currentDate + ".csv"
         csvHeaders = ["projectName", "projectTags", "type", "queryName", "severity", "fileName", "line", "language", "packageName", "CVE_Id", "status", "state", "foundAt"]
         with open(fileName, "w") as stream:
             writer = csv.DictWriter(stream, fieldnames=csvHeaders)
             writer.writeheader()
-            
+         
             writer = csv.writer(stream)
             writer.writerows(allTargetResults)
+            allTargetResults.clear()
